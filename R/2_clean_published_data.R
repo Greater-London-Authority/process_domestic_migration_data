@@ -1,7 +1,6 @@
 library(stringr)
 
-
-source("R/functions/clean_published_data.R")
+source("R/functions/clean_data.R")
 source("R/functions/get_sheet_name.R")
 
 fpath <- list(
