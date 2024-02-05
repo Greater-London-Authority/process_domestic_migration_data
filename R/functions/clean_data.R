@@ -6,7 +6,7 @@ library(readr)
 clean_data <- function(raw_path, sheet_name, clean_path, max_age = 90) {
 
   out_df <- read_excel(raw_path, sheet = sheet_name) %>%
-    rename(gss_in = inla, gss_out = outla, year = Year) %>%
+    rename(any_of(c(sex = "Sex", gss_in = "inla", gss_out = "outla", year = "Year"))) %>%
     mutate(sex = recode(sex,
                         "F" = "female",
                         "M" = "male")) %>%

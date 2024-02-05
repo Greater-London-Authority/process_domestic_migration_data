@@ -25,5 +25,3 @@ for(fp in fpaths) {
              clean_path = clean_fp)
 
 }
-
-
