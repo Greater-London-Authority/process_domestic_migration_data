@@ -1,7 +1,7 @@
 source("R/functions/create_gross_flows.R")
 source("R/functions/aggregate_od_to_region.R")
 
-fpath <- list(lad_od_data = "data/processed/full_series.rds",
+fpath <- list(lad_od_data = "data/processed/full_series_lad.rds",
               lad_gross_flows = "data/processed/lad_gross_flows.rds",
               region_od_data = "data/processed/region_od_series.rds",
               region_gross_flows = "data/processed/region_gross_flows.rds",
