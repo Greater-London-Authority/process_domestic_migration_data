@@ -1,7 +1,7 @@
 fpath <- list(
   clean_data = "data/intermediate/",
   processed_data = "data/processed/",
-  lad_series = "data/processed/lad_series.rds"
+  lad_series = "data/processed/new_series_lad.rds"
 )
 
 if(!dir.exists(fpath$processed_data)) dir.create(fpath$processed_data, recursive = TRUE)
