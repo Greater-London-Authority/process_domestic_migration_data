@@ -1,19 +1,25 @@
 library(stringr)
 
 source("R/functions/clean_data.R")
-source("R/functions/get_sheet_name.R")
 
 fpath <- list(
   raw_data = "data/raw/",
   clean_data = "data/intermediate/"
 )
 
-geog_yr <- 2021
+geog_yr <- 2023
 
 if(!dir.exists(fpath$clean_data)) dir.create(fpath$clean_data, recursive = TRUE)
 
 fpaths <- list.files(fpath$raw_data, pattern = "detailedestimates", full.names = TRUE)
 fpaths <- fpaths[!grepl("~", fpaths)]
+
+
+get_sheet_name <- function(data_yr, geog_yr) {
+  sheet_name <- paste0(data_yr, " on ", geog_yr, " LAs")
+  return(sheet_name)
+}
+
 
 for(fp in fpaths) {
 
