@@ -38,6 +38,8 @@ docs/
 po/*~
 # RStudio Connect folder
 rsconnect/
+# Mac files
+.DS_Store
 ### R.Bookdown Stack ###
 # R package: bookdown caching files
 /*_files/
