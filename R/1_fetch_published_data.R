@@ -24,6 +24,10 @@ if(length(data_links) > 0) {
 
   for(i in 1:length(data_links)){
     message(paste("Writing file: ", fp_destfiles[i]))
-    download.file(data_links[i], destfile = fp_destfiles[i], mode = "wb")
+    download.file(data_links[i],
+                  destfile = fp_destfiles[i],
+                  mode = "wb",
+                  extra = options(timeout = max(100, getOption("timeout")))
+    )
   }
 }
