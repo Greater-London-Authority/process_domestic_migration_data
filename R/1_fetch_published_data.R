@@ -15,7 +15,8 @@ link_pattern = "detailedinternalmigrationestimates"
 
 pg <- read_html(base_url)
 links <- html_attr(html_nodes(pg, "a"), "href")
-data_links <- paste0("https://www.ons.gov.uk/", links[grepl(link_pattern, links)])
+excel_links <- links[grepl(".xlsx|.xls|.csv", links)]
+data_links <- paste0("https://www.ons.gov.uk/", excel_links[grepl(link_pattern, excel_links)])
 
 
 if(length(data_links) > 0) {
