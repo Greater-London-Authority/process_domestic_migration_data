@@ -2,6 +2,7 @@ library(dplyr)
 library(tidyr)
 library(readxl)
 library(readr)
+library(stringr)
 
 clean_data <- function(raw_path, sheet_name, clean_path, max_age = 90) {
 
@@ -9,12 +10,14 @@ clean_data <- function(raw_path, sheet_name, clean_path, max_age = 90) {
     rename(any_of(c(sex = "Sex", gss_in = "inla", gss_out = "outla", year = "Year"))) %>%
     mutate(sex = recode(sex,
                         "F" = "female",
+                        "f" = "female",
+                        "m" = "male",
                         "M" = "male")) %>%
     pivot_longer(cols = starts_with("Age_"),
                  names_prefix = "Age_",
                  names_to = "age",
                  values_to = "value") %>%
-    mutate(age = as.numeric(age)) %>%
+    mutate(age = as.numeric(str_extract(age, "[0-9]+"))) %>%
     mutate(age = case_when(
       age > max_age ~ max_age,
       TRUE ~ age
