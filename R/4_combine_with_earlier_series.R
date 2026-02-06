@@ -55,8 +55,15 @@ full_series <- bind_rows(old_series_chg_gss_both, new_series) %>%
 
 saveRDS(full_series, fpath$full_series)
 
+rm(old_series_chg_gss_both, new_series)
+
+gc()
 
 full_series %>%
   group_by(year) %>%
   write_dataset(path = fpath$parquet_output,
                 format = "parquet")
+
+rm(full_series)
+
+gc()

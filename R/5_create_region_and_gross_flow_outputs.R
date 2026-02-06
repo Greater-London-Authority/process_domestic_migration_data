@@ -28,30 +28,46 @@ saveRDS(lad_gross_flows, fpath$lad_gross_flows)
 
 all_yrs <- unique(lad_gross_flows$year)
 
+rm(lad_gross_flows)
 
+# Create Origin-Destination data and gross flows for aggregated areas
+
+## Regions
 region_od_data <- lapply(all_yrs, aggregate_od_to_region_year_from_pq,
                          od_flows_pq = lad_od_data_pq,
                          lookup = readRDS(fpath$lookup_lad_rgn_ctry)) %>%
   bind_rows()
 
+region_gross_flows <- create_gross_flows(region_od_data, rounding = 1)
+
+saveRDS(region_od_data, fpath$region_od_data)
+
+rm(region_od_data)
+
+## Countries
 ctry_od_data <- lapply(all_yrs, aggregate_od_to_region_year_from_pq,
                        od_flows_pq = lad_od_data_pq,
                        lookup = readRDS(fpath$lookup_lad_ctry)) %>%
   bind_rows()
 
+ctry_gross_flows <- create_gross_flows(ctry_od_data, rounding = 1)
+
+saveRDS(ctry_od_data, fpath$ctry_od_data)
+
+rm(ctry_od_data)
+
+# Inner/Outer London
 inner_outer_london_od_data <- lapply(all_yrs, aggregate_od_to_region_year_from_pq,
                                      od_flows_pq = lad_od_data_pq,
                                      lookup = readRDS(fpath$lookup_lad_inner_outer_london)) %>%
   bind_rows()
 
-saveRDS(inner_outer_london_od_data, fpath$lookup_lad_inner_outer_london)
-saveRDS(region_od_data, fpath$region_od_data)
-saveRDS(ctry_od_data, fpath$ctry_od_data)
-
 inner_outer_london_gross_flows <- create_gross_flows(inner_outer_london_od_data, rounding = 1) %>%
   filter(gss_code != "other")
-region_gross_flows <- create_gross_flows(region_od_data, rounding = 1)
-ctry_gross_flows <- create_gross_flows(ctry_od_data, rounding = 1)
+
+saveRDS(inner_outer_london_od_data, fpath$inner_outer_london_od_data)
+
+rm(inner_outer_london_od_data)
 
 ctry_region_gross_flows <- bind_rows(filter(ctry_gross_flows, gss_code == "E92000001"),
                                      region_gross_flows,
