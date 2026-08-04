@@ -4,7 +4,7 @@ library(readxl)
 library(readr)
 library(stringr)
 
-clean_data <- function(raw_path, sheet_name, clean_path, max_age = 90) {
+clean_data <- function(raw_path, sheet_name, max_age = 90) {
 
   out_df <- read_excel(raw_path, sheet = sheet_name) %>%
     rename(any_of(c(sex = "Sex", gss_in = "inla", gss_out = "outla", year = "Year"))) %>%
@@ -25,5 +25,5 @@ clean_data <- function(raw_path, sheet_name, clean_path, max_age = 90) {
     group_by(across(-any_of(c("value")))) %>%
     summarise(value = sum(value), .groups = "drop")
 
-  saveRDS(out_df, file = clean_path)
+  return(out_df)
 }
