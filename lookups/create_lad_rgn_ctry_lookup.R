@@ -12,7 +12,10 @@ lookup_scot_ni <- data.frame(gss_code = c("N92000002", "S92000003"),
 
 lookup_rgn_ctry <- bind_rows(
   readRDS(fpath$lookup_rgn),
-  filter(readRDS(fpath$lookup_ctry), RGNNM == "Wales"),
-  lookup_scot_ni)
+  readRDS(fpath$lookup_ctry) |>
+    filter(RGNCD != "E92000001"),
+  lookup_scot_ni
+  ) |>
+  distinct()
 
 saveRDS(lookup_rgn_ctry, fpath$lookup_rgn_ctry)

@@ -85,3 +85,11 @@ gross_flows <- create_gross_flows_from_pq(od_flows_pq = domestic_od_flows_pq,
   write_dataset(path = fpath$domestic_gross_flows_pq,
                 format = "parquet",
                 partitioning = c("geography", "component", "year"))
+
+
+
+# tst <- domestic_od_flows_pq %>%
+#   filter(year == 2016) |>
+#   filter(geography == "region") |>
+#   collect()
+
